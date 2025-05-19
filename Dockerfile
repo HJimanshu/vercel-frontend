@@ -1,18 +1,9 @@
-FROM node:14-alpine
+FROM python:3.10-slim
 
-WORKDIR /app
+# Install Node.js
+RUN apt-get update && apt-get install -y curl && \
+    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
+    apt-get install -y nodejs
 
-# Install dependencies
-COPY package.json package-lock.json* ./
-RUN npm install
-
-# Copy project files
-COPY . .
-
-# Build your app for production if needed (or run development server)
-RUN npm run build
-
-# Expose port (if running a server)
-EXPOSE 3000
-
-CMD ["npm", "start"]
+# Install Python packages if needed
+# COPY . /app etc...
