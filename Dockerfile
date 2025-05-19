@@ -7,4 +7,5 @@ COPY . .
 EXPOSE 3000
 
 # Example: start your code runner server (like Express or FastAPI shell executor)
-CMD ["node", "index.js"]
+CMD ["node", "server.js"]
+
