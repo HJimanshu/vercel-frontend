@@ -1,22 +1,10 @@
-# ---------- Build Stage ----------
-FROM node:18 AS build
+FROM node:18
 
 WORKDIR /app
-COPY package*.json ./
-RUN npm install
 COPY . .
-RUN npm run build
 
-# ---------- Production Stage ----------
-FROM nginx:alpine
+# If you're just running code snippets, no build needed
+EXPOSE 3000
 
-# Copy built React app to Nginx's HTML directory
-COPY --from=build /app/build /usr/share/nginx/html
-
-# Optional: custom Nginx config
-# COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-EXPOSE 80
-
-# Correct CMD for Nginx container
-CMD ["nginx", "-g", "daemon off;"]
+# Example: start your code runner server (like Express or FastAPI shell executor)
+CMD ["node", "index.js"]
