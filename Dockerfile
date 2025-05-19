@@ -1,9 +1,22 @@
-FROM python:3.10-slim
+# ---------- Build Stage ----------
+FROM node:18 AS build
 
-# Install Node.js
-RUN apt-get update && apt-get install -y curl && \
-    curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
-    apt-get install -y nodejs
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN npm run build
 
-# Install Python packages if needed
-# COPY . /app etc...
+# ---------- Production Stage ----------
+FROM nginx:alpine
+
+# Copy built React app to Nginx's HTML directory
+COPY --from=build /app/build /usr/share/nginx/html
+
+# Optional: custom Nginx config
+# COPY nginx.conf /etc/nginx/conf.d/default.conf
+
+EXPOSE 80
+
+# Correct CMD for Nginx container
+CMD ["nginx", "-g", "daemon off;"]
