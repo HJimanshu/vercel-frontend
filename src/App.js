@@ -8,23 +8,12 @@ const LANGUAGES = [
   { label: "JavaScript", value: "javascript" },
 ];
 
-// const codeTemplates = {
-//   python: 'print(input())',
-//   javascript: 'console.log("Hello world!")',
-// };
-
 const codeTemplates = {
   python: 'print(input())',
-  javascript: `const readline = require('readline');
-const rl = readline.createInterface({
-  input: process.stdin,
-  output: process.stdout
-});
-rl.question('Enter something: ', answer => {
-  console.log(answer);
-  rl.close();
-});`
+  javascript: 'console.log("Hello world!")',
 };
+
+
 
 function extractPrompt(code, language) {
   if (language === "python") {
