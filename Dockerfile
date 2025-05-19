@@ -1,14 +1,18 @@
-# Build stage
-FROM node:18 AS build
+FROM node:14-alpine
 
 WORKDIR /app
-COPY package*.json ./
+
+# Install dependencies
+COPY package.json package-lock.json* ./
 RUN npm install
+
+# Copy project files
 COPY . .
+
+# Build your app for production if needed (or run development server)
 RUN npm run build
 
-# Serve with nginx
-FROM nginx:alpine
-COPY --from=build /app/build /usr/share/nginx/html
-EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+# Expose port (if running a server)
+EXPOSE 3000
+
+CMD ["npm", "start"]
