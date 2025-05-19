@@ -115,7 +115,7 @@ function App() {
     const tab = tabs[activeTab];
     const start = Date.now();
     try {
-      const res = await axios.post("http://127.0.0.1:8000/editor/execute/", {
+      const res = await axios.post("https://vercel-backend-in45.onrender.com/editor/execute/", {
         code: tab.code,
         input: inputValue,
         language: tab.language,
